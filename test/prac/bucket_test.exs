@@ -1,7 +1,6 @@
 defmodule Prac.BucketTest do
   use ExUnit.Case, async: true
 
-
   setup do
      bucket = start_supervised!(Prac.Bucket)
     %{bucket: bucket}
@@ -16,4 +15,8 @@ defmodule Prac.BucketTest do
 #  test "delete/2 returns a key if one exists(temp workers)" do
 #    assert Supervisor.child_spec(Prac.Bucket, []).restart == :temporary
 #   end
+
+  test "Buckets can be temporary workers" do
+    assert Supervise.child_spec(Prac.Bucket, []).restart == :temporary
+  end
 end
