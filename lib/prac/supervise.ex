@@ -8,9 +8,10 @@ defmodule Prac.Supervise do
 
   def init(:ok) do
     children = [
+    {DynamicSupervisor, name: Prac.BucketSupervisor, strategy: :one_for_one},
     {Prac.Registry, name: Prac.Registry}
     ]
 
-    Supervisor.init(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_all)
   end
 end
