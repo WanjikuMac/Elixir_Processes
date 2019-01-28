@@ -29,6 +29,9 @@ defmodule Prac.Bucket do
   Returns the current value of `key` if `key` exists
   """
   def delete(bucket, key) do
-  Agent.get_and_update(bucket, fn dict -> Map.pop(dict,key) end)
+    Process.sleep(1000) #puts the client to sleep
+  Agent.get_and_update(bucket, fn dict ->
+    Process.sleep(1000) #puts the server to sleep
+    Map.pop(dict,key) end)
   end
 end
