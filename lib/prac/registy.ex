@@ -60,11 +60,11 @@ defmodule Prac.Registry do
     `{:create, name}` - request from client API
     `names` -- current server state
   """
-  def handle_cast({:create, name}, {names, refs}) do
+  def handle_cast({:create, name}, {names, refs}) do #using handle_cast for illustration purposes, in real world this should be handle_call since you expect a response
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}} #tuple inform of {:noreply, new_state}
     else
-      {:ok, pid} = Prac.Bucket.start_link([])
+      {:ok, pid} = DynamicSupervisor.start_child(Prac.BucketSupervisor, Prac.Bucket)
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)

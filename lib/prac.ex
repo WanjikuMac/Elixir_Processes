@@ -1,18 +1,7 @@
 defmodule Prac do
-  @moduledoc """
-  Documentation for Prac.
-  """
+  use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Prac.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    Prac.Supervise.start_link(name: Prac.Supervise)
   end
 end

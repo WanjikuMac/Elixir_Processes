@@ -1,4 +1,7 @@
-defmodule Prac.Bucket do
+defmodule Bucket do
+  #This file is in the root folder since, I ran it on iex
+  #This is done by running c "bucket.exs" then press enter. Boom, you can
+  #Start your server and interact with it, run basic things
   use Agent, restart: :temporary
 
   @doc """
@@ -29,9 +32,6 @@ defmodule Prac.Bucket do
   Returns the current value of `key` if `key` exists
   """
   def delete(bucket, key) do
-    Process.sleep(1000) #puts the client to sleep
-  Agent.get_and_update(bucket, fn dict ->
-    Process.sleep(1000) #puts the server to sleep
-    Map.pop(dict,key) end)
+    Agent.get_and_update(bucket, fn dict -> Map.pop(dict,key) end)
   end
 end

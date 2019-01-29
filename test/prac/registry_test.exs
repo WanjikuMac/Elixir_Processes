@@ -22,4 +22,13 @@ defmodule Prac.RegistryTest do
     Agent.stop(bucket)
     assert Prac.Registry.lookup(registry, "basket") == :error
   end
+
+  test "remove bucket on crash", %{registry: registry} do
+    Prac.Registry.create(registry, "shopping")
+    {:ok, bucket} = Prac.Registry.lookup(registry, "shopping")
+
+    #stop the bucket with non-normal reason
+    Agent.stop(bucket, :shutdown)
+    assert Prac.Registry.lookup(registry, "shopping") == :error
+  end
 end
